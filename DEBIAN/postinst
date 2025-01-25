@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+cp -r -f  /tmp/eggs-quirinux-config/etc/calamares/* /etc/calamares/
+cp -r -f  /tmp/eggs-quirinux-config/etc/penguins-eggs.d/* /etc/penguins.eggs.d/
+cp -r -f  /tmp/eggs-quirinux-config/usr/lib/calamares/* /usr/lib/calamares/
+
+if [ -d /home/quirinux2/ ]; then
+    
+    cp -r -f  /tmp/eggs-quirinux-config/home/quirinux2/.wardrobe/* /home/quirinux2/.wardrobe/
+    chown -R quirinux2:quirinux2 /home/quirinux2/
+fi
+
+find /home/quirinux2/.wardrobe/ -type d -exec chmod 755 {} \;
+find /home/quirinux2/.wardrobe/ -type f -exec chmod 644 {} \;
+find /etc/calamares/ -type d -exec chmod 755 {} \;
+find /etc/calamares/ -type f -exec chmod 644 {} \;
+
+
+
+
+
+
+

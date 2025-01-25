@@ -1,0 +1,29 @@
+componentName: quirinux
+images:
+  productIcon: quirinux-logo.png
+  productLogo: quirinux-logo.png
+  productWelcome: welcome.png
+slideshow: show.qml
+slideshowAPI: 1
+strings:
+  bootloaderEntryName: Quirinux
+  bugReportUrl: >-
+    https://foro.quirinux.org/forums/forum/foro-principal-de-quirinux/solucion-de-errores/
+  productName: QUIRINUX ESTABLE
+  homeUrl: https://www.quirinux.org/
+  supportUrl: https://foro.quirinux.org
+  shortProductName: quirinux Estable
+  shortVersion: '2025-01-23'
+  shortVersionedName: QUIRINUX ESTABLE 2025-01-23
+  version: '2025-01-23'
+  versionedName: quirinux Estable (2025-01-23)
+style:
+  SidebarBackground: '#010027'
+  SidebarBackgroundCurrent: '#017877'
+  SidebarText: '#FFFFFF'
+  SidebarTextCurrent: '#fbfbfb'
+  sidebarBackground: '#010027'
+  sidebarBackgroundCurrent: '#017877'
+  sidebarText: '#FFFFFF'
+  sidebarTextCurrent: '#fbfbfb'
+welcomeStyleCalamares: true
