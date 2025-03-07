@@ -1,0 +1,14 @@
+Package: eggs-quirinux-config
+Version: 1.3.7
+Maintainer: Charlie Martinez <cmartinez@quirinux.org>
+Section: system
+Homepage: https://www.quirinux.org
+Architecture: amd64
+Priority: optional
+Depends: penguins-eggs
+Conflicts: slim
+Installed-Size:  29361
+Description: Eggs Quirinux Config
+ Configuraciones especificas para Quirinux 2.0
+
+

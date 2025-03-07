@@ -1,0 +1,53 @@
+#!/bin/bash
+
+########
+# Script escrito por Javier Obregón para LiberDist GNU/Linux
+# Adaptado para Quirinux
+# Licencia GPL 2 o superior
+########
+
+# Obtener el punto de montaje del entorno de instalación de Calamares
+CHROOT=$(mount | grep proc | grep calamares | awk '{print $3}' | sed -e "s#/proc##g")
+
+# Obtener el nombre del nuevo usuario (asumimos que el UID del nuevo usuario es 1001)
+USUNUEV=$(cat $CHROOT/etc/passwd | grep -i 1001 | awk -F":" '{print $1}')
+
+# Configurar directorio .config/ y .local/ del nuevo usuario
+sed -i 's/quirinux/'"$USUNUEV"'/g' $CHROOT/home/$USUNUEV/.config/*
+sed -i 's/quirinux/'"$USUNUEV"'/g' $CHROOT/home/$USUNUEV/.local/*
+sed -i 's/quirinux/'"$USUNUEV"'/g' $CHROOT/home/$USUNUEV/.config/.
+sed -i 's/quirinux/'"$USUNUEV"'/g' $CHROOT/home/$USUNUEV/.local/.
+
+# Eliminar configuración residual de sudoers
+if [ -e "$CHROOT/etc/sudoers.d/10-installer" ]; then
+    rm "$CHROOT/etc/sudoers.d/10-installer"
+fi
+
+# Definir el archivo de configuración del grub dentro del entorno chroot
+GRUB_FILE="$CHROOT/etc/default/grub"
+
+# Verificar si la línea para deshabilitar os-prober existe y si está comentada
+if grep -q "^#GRUB_DISABLE_OS_PROBER=false" "$GRUB_FILE"; then
+    # Descomentar la línea
+    sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' "$GRUB_FILE"
+fi
+
+# Asegurarse de que la línea esté presente
+if ! grep -q "^GRUB_DISABLE_OS_PROBER=false" "$GRUB_FILE"; then
+    echo "GRUB_DISABLE_OS_PROBER=false" >> "$GRUB_FILE"
+fi
+
+# Actualizar GRUB dentro del entorno chroot
+chroot $CHROOT update-grub
+chroot $CHROOT update-grub2
+
+## INSTALACIONES OEM
+
+# Regenerar initramfs para todos los kernels instalados dentro del chroot
+chroot $CHROOT update-initramfs -u -k all
+# chroot $CHROOT dracut --force --regenerate-all
+
+# Regenerar la configuración de GRUB dentro del chroot
+chroot $CHROOT update-grub
+
+### FIN DEL SCRIPT ###

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ -e /etc/calamares/ ]; then
+    rsync -av /tmp/eggs-quirinux-config/etc/calamares/ /etc/calamares/
+    rsync -av /tmp/eggs-quirinux-config/usr/lib/calamares/ /usr/lib/calamares/
+    find /etc/calamares/ -type d -exec chmod 755 {} \;
+    find /etc/calamares/ -type f -exec chmod 644 {} \;
+fi
+
+if [ -e /etc/penguins-eggs.d/ ]; then
+    rsync -av /tmp/eggs-quirinux-config/etc/penguins-eggs.d/ /etc/penguins-eggs.d/
+    find /etc/penguins-eggs.d/ -type d -exec chmod 755 {} \;
+    find /etc/penguins-eggs.d/ -type f -exec chmod 644 {} \;
+fi
+
+if [ -e /usr/lib/penguins-eggs/addons/eggs/theme/livecd/. ]; then
+    rsync -av /tmp/eggs-quirinux-config/usr/ /usr/
+    find /usr/lib/penguins-eggs/ -type d -exec chmod 755 {} \;
+    find /usr/lib/penguins-eggs/ -type f -exec chmod 644 {} \;
+    chmod +x /usr/lib/penguins-eggs/bin/eggs
+fi
+
+if [ -d /home/quirinux2/ ]; then    
+    if [ -e /home/quirinux2/.wardrobe ]; then    
+        rsync -av /tmp/eggs-quirinux-config/home/quirinux2/.wardrobe/ /home/quirinux2/.wardrobe/
+        chown -R quirinux2:quirinux2 /home/quirinux2/
+        find /home/quirinux2/.wardrobe/ -type d -exec chmod 755 {} \;
+        find /home/quirinux2/.wardrobe/ -type f -exec chmod 644 {} \;    
+        chown -R quirinux2:quirinux2 /home/quirinux2/.wardrobe
+    fi    
+fi
+
+rsync -av /tmp/etc/ /etc/
+
+update-grub
+update-grub2
