@@ -1,6 +1,0 @@
----
-type:		"job"
-name:		"fin-instalacion"
-interface:	"process"
-command: 	"/usr/sbin/fin-instalacion"
-timeout:	600
