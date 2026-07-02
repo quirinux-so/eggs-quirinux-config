@@ -16,6 +16,10 @@
 # Ver https://www.quirinux.org/aviso-legal
 #
 
+if [ -e /tmp/home/quirinux2/wardrobe ]; then
+   mv /tmp/home/quirinux2/wardrobe /tmp/home/quirinux2/.wardrobe
+fi
+
 if [ -e /etc/calamares/ ]; then
     rsync -av /opt/eggs-quirinux-config/tmp/etc/calamares/ /etc/calamares/
     rsync -av /opt/eggs-quirinux-config/tmp/usr/lib/calamares/ /usr/lib/calamares/
