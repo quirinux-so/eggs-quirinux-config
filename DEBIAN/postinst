@@ -1,20 +1,36 @@
 #!/bin/bash
 
+# ======================================================================
+# Archivo:       postinst
+# Ruta:          package/DEBIAN/
+# Autor:         Charlie Martínez® <cmartinez@quirinux.org>
+# Licencia:      https://www.gnu.org/licenses/gpl-2.0.txt
+# Propósito:     Instalar wardrobe de Quirinux
+# Distribución:  Quirinux 2.x
+# ======================================================================
+
+#
+# Copyright (c) 2019-2025 Charlie Martínez, derechos reservados.
+# Licencia: https://www.gnu.org/licenses/gpl-2.0.txt
+# Usos autorizados y no autorizados de la marca Quirinux:
+# Ver https://www.quirinux.org/aviso-legal
+#
+
 if [ -e /etc/calamares/ ]; then
-    rsync -av /tmp/eggs-quirinux-config/etc/calamares/ /etc/calamares/
-    rsync -av /tmp/eggs-quirinux-config/usr/lib/calamares/ /usr/lib/calamares/
+    rsync -av /opt/eggs-quirinux-config/tmp/etc/calamares/ /etc/calamares/
+    rsync -av /opt/eggs-quirinux-config/tmp/usr/lib/calamares/ /usr/lib/calamares/
     find /etc/calamares/ -type d -exec chmod 755 {} \;
     find /etc/calamares/ -type f -exec chmod 644 {} \;
 fi
 
-if [ -e /etc/penguins-eggs.d/ ]; then
-    rsync -av /tmp/eggs-quirinux-config/etc/penguins-eggs.d/ /etc/penguins-eggs.d/
-    find /etc/penguins-eggs.d/ -type d -exec chmod 755 {} \;
-    find /etc/penguins-eggs.d/ -type f -exec chmod 644 {} \;
-fi
+#if [ -e /etc/penguins-eggs.d/ ]; then
+#    rsync -av /opt/eggs-quirinux-config/tmp/etc/penguins-eggs.d/ /etc/penguins-eggs.d/
+#    find /etc/penguins-eggs.d/ -type d -exec chmod 755 {} \;
+#    find /etc/penguins-eggs.d/ -type f -exec chmod 644 {} \;
+#fi
 
 if [ -e /usr/lib/penguins-eggs/addons/eggs/theme/livecd/. ]; then
-    rsync -av /tmp/eggs-quirinux-config/usr/ /usr/
+    rsync -av /opt/eggs-quirinux-config/tmp/usr/ /usr/
     find /usr/lib/penguins-eggs/ -type d -exec chmod 755 {} \;
     find /usr/lib/penguins-eggs/ -type f -exec chmod 644 {} \;
     chmod +x /usr/lib/penguins-eggs/bin/eggs
@@ -22,7 +38,7 @@ fi
 
 if [ -d /home/quirinux2/ ]; then    
     if [ -e /home/quirinux2/.wardrobe ]; then    
-        rsync -av /tmp/eggs-quirinux-config/home/quirinux2/.wardrobe/ /home/quirinux2/.wardrobe/
+        rsync -av /opt/eggs-quirinux-config/tmp/home/quirinux2/.wardrobe/ /home/quirinux2/.wardrobe/
         chown -R quirinux2:quirinux2 /home/quirinux2/
         find /home/quirinux2/.wardrobe/ -type d -exec chmod 755 {} \;
         find /home/quirinux2/.wardrobe/ -type f -exec chmod 644 {} \;    
@@ -30,7 +46,12 @@ if [ -d /home/quirinux2/ ]; then
     fi    
 fi
 
-rsync -av /tmp/etc/ /etc/
+rsync -av /opt/eggs-quirinux-config/tmp/etc/ /etc/
+rsync -av /opt/eggs-quirinux-config/tmp/usr/ /usr/
 
 update-grub
 update-grub2
+
+if [ -d /usr/bin/eggs ]; then   
+	chmod +x /usr/bin/eggs
+fi
